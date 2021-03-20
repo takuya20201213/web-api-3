@@ -1,35 +1,28 @@
 <template>
-  <div id="app">
-    <Home @getchildText="show"></Home>
-    <p>{{addressnum}}</p>
-    <p>address: {{text}}</p>
-    <router-view />
-  </div>
+<div id="app">
+  <input type="text" v-model="text" />
+  <button @click="start">住所自動入力</button>
+  <p>Address: {{AddressName}}</p>
+</div>
 </template>
 
 <script>
-import Home from "./views/Home";
 import axios from "axios";
 export default {
   data() {
     return {
-      text: ""
+      text: "",
+      AddressName: ""
     };
   },
   methods: {
-    show(childText) {
-      this.addressnum = childText
-    }
-  },
-  async created() {
-    const item = await axios.get(
-      `https://apis.postcode-jp.com/api/v4/postcodes?postcode=${this.addressnum}-G-v-d "apikey=tO3eWNjkE7xFamlbCjAryBCmMIbFPguP5ufLNRK" `
+    start() {
+      const item = axios.get(
+        `https://apis.postcode-jp.com/api/v4/postcodes?postcode=${this.text}-G-v-d "apikey=tO3eWNjkE7xFamlbCjAryBCmMIbFPguP5ufLNRK" `
       ).then((res) => console.log(res));
       const addressData = item.data;
-      this.text = addressData.allAddress;
-  },
-  componets: {
-    Home
+      this.AddressName = addressData.allAddress;
+    },
   }
 };
 </script>
