@@ -1,18 +1,49 @@
 <template>
   <div id="app">
-    <Header />
-    <router />
+    <Home @getchildText="show"></Home>
+    <p>{{addressnum}}</p>
+    <p>address: {{text}}</p>
+    <router-view />
   </div>
 </template>
 
 <script>
-import Header from "./components/Header";
+import Home from "./views/Home";
+import axios from "axios";
 export default {
-  components: {
-    Header
+  data() {
+    return {
+      text: ""
+    };
+  },
+  methods: {
+    show(childText) {
+      this.addressnum = childText
+    }
+  },
+  async created() {
+    const item = await axios.get(
+      `https://apis.postcode-jp.com/api/v4/postcodes?postcode=${this.addressnum}-G-v-d "apikey=tO3eWNjkE7xFamlbCjAryBCmMIbFPguP5ufLNRK" `
+      ).then((res) => console.log(res));
+      const addressData = item.data;
+      this.text = addressData.allAddress;
+  },
+  componets: {
+    Home
   }
 };
 </script>
+
+
+
+
+
+
+
+
+
+
+
 
 <style>
 html, body, div, span, object, iframe,
