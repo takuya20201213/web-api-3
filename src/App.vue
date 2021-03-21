@@ -16,10 +16,11 @@ export default {
     };
   },
   methods: {
-    start() {
-      const item = axios.get(
-        `https://apis.postcode-jp.com/api/v4/postcodes?postcode=${this.text}-G-v-d "apikey=tO3eWNjkE7xFamlbCjAryBCmMIbFPguP5ufLNRK" `
-      ).then((res) => console.log(res));
+    async start() {
+      const item = await axios.get(
+        `https://apis.postcode-jp.com/api/v4/postcodes/postcode=${this.text}-G-v-d?"apikey=tO3eWNjkE7xFamlbCjAryBCmMIbFPguP5ufLNRK"`
+      );
+
       const addressData = item.data;
       this.AddressName = addressData.allAddress;
     },
