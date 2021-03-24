@@ -19,7 +19,7 @@ export default {
     async start() {
       const item = await axios.get(
         `https://apis.postcode-jp.com/api/v4/postcodes/${this.text}?&"apikey=tO3eWNjkE7xFamlbCjAryBCmMIbFPguP5ufLNRK"`
-      ).then((res) => console.log(res));
+      );
 
       const addressData = item.data[0];
       this.AddressName = addressData.allAddress;
